@@ -22,8 +22,6 @@
       color: var(--text-color);
       min-height: 100vh;
       line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
     .container {
       max-width: var(--max-width);
@@ -46,7 +44,7 @@
     }
     form { display: grid; gap: 20px; }
     label { font-weight: 600; color: var(--primary-color); }
-    input[type="text"], input[type="tel"] {
+    input[type="text"], input[type="tel"], input[type="file"] {
       width: 100%; padding: 10px; font-size: 1rem;
       border: 1.5px solid #ccc; border-radius: 6px;
       transition: border-color 0.3s;
@@ -56,18 +54,6 @@
     }
     .contract-section { font-weight: 700; margin-top: 24px; color: var(--primary-color); }
     .signature-container { margin-top: 20px; }
-    #signature-pad {
-      border: 2px solid var(--accent-color);
-      border-radius: 6px;
-      width: 100%; max-width: 400px;
-      height: 150px;
-      touch-action: none;
-      background: #f8f8f8;
-    }
-    #signature-pad.disabled {
-      pointer-events: none;
-      background: #eee;
-    }
     .buttons {
       margin-top: 24px;
       display: flex; gap: 16px; flex-wrap: wrap;
@@ -89,7 +75,6 @@
       .buttons { flex-direction: column; }
       button { max-width: 100%; }
     }
-    /* Modal */
     #previewModal {
       display: none; position: fixed; z-index: 1000;
       left: 0; top: 0; width: 100vw; height: 100vh;
@@ -130,12 +115,9 @@
       <button type="button" id="previewBtn">Preview Contract</button>
     </div>
 
-    <div class="contract-section">Signature</div>
+    <div class="contract-section">Upload Digital Signature</div>
     <div class="signature-container">
-      <canvas id="signature-pad" width="400" height="150" class="disabled"></canvas>
-      <div class="buttons">
-        <button type="button" id="clear" disabled>Clear Signature</button>
-      </div>
+      <input type="file" id="signatureFile" accept="image/png, image/jpeg" required />
     </div>
 
     <div class="buttons">
@@ -157,18 +139,13 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 const { jsPDF } = window.jspdf;
-const signaturePad = new SignaturePad(document.getElementById('signature-pad'), {
-  backgroundColor: 'rgba(255,255,255,0)',
-  penColor: 'rgb(183,28,28)'
-});
-signaturePad.off();
 
 const previewModal = document.getElementById('previewModal');
 const contractTextArea = document.getElementById('contractText');
+const signatureInput = document.getElementById('signatureFile');
 
 document.getElementById('previewBtn').addEventListener('click', () => {
   const name = document.getElementById('clientName').value || '[To be filled]';
@@ -214,10 +191,6 @@ This Agreement constitutes the entire understanding between the parties and supe
   contractTextArea.textContent = contract;
   previewModal.classList.add('active');
 
-  // ✅ Enable signature pad here
-  signaturePad.on();
-  document.getElementById('signature-pad').classList.remove('disabled');
-  document.getElementById('clear').disabled = false;
   document.getElementById('generatePdfBtn').disabled = false;
 });
 
@@ -225,32 +198,34 @@ document.getElementById('closePreview').addEventListener('click', () => {
   previewModal.classList.remove('active');
 });
 
-document.getElementById('clear').addEventListener('click', () => {
-  signaturePad.clear();
-});
-
-document.getElementById('contractForm').addEventListener('submit', (e) => {
+document.getElementById('contractForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (signaturePad.isEmpty()) {
-    alert('Please sign before downloading.');
+
+  const file = signatureInput.files[0];
+  if (!file) {
+    alert('Please upload a digital signature image (PNG or JPEG).');
     return;
   }
 
-  const name = document.getElementById('clientName').value;
-  const brand = document.getElementById('brandName').value;
-  const phone = document.getElementById('clientPhone').value;
-  const insta = document.getElementById('clientInstagram').value;
-  const date = new Date().toLocaleDateString();
+  const reader = new FileReader();
+  reader.onload = function () {
+    const signatureDataUrl = reader.result;
 
-  const doc = new jsPDF();
-  doc.setFontSize(16);
-  doc.setTextColor('#b71c1c');
-  doc.text('Website Service Agreement', 105, 20, { align: 'center' });
+    const name = document.getElementById('clientName').value;
+    const brand = document.getElementById('brandName').value;
+    const phone = document.getElementById('clientPhone').value;
+    const insta = document.getElementById('clientInstagram').value;
+    const date = new Date().toLocaleDateString();
 
-  doc.setFontSize(12);
-  doc.setTextColor('#000');
-  let y = 40;
-  const text = `This Website Service Agreement ("Agreement") is made and entered into as of ${date} ("Effective Date") by and between:
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.setTextColor('#b71c1c');
+    doc.text('Website Service Agreement', 105, 20, { align: 'center' });
+
+    doc.setFontSize(12);
+    doc.setTextColor('#000');
+    let y = 40;
+    const text = `This Website Service Agreement ("Agreement") is made and entered into as of ${date} ("Effective Date") by and between:
 
 1. Service Provider:
    Mara Masita
@@ -281,13 +256,13 @@ This Agreement shall always be honest and pleasure for both parties.
 6. Entire Agreement
 This Agreement constitutes the entire understanding between the parties and supersedes all prior agreements.`;
 
-  const lines = doc.splitTextToSize(text, 180);
-  doc.text(lines, 15, y);
+    const lines = doc.splitTextToSize(text, 180);
+    doc.text(lines, 15, y);
 
-  const imgData = signaturePad.toDataURL('image/png');
-  doc.addImage(imgData, 'PNG', 15, 250, 60, 30);
-
-  doc.save(`Masify_Contract_${name.replace(/\s+/g,'_')}.pdf`);
+    doc.addImage(signatureDataUrl, 'PNG', 15, 250, 60, 30);
+    doc.save(`Masify_Contract_${name.replace(/\s+/g, '_')}.pdf`);
+  };
+  reader.readAsDataURL(file);
 });
 </script>
 </body>
