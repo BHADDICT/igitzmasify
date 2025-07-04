@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ANXIETY CONTRACTS</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --primary-color: #7b1e1e;
+  --bg-color: #000;
+  --text-color: #e0e0e0;
+  --accent-color: #b71c1c;
+}
+
+* { box-sizing: border-box; }
+
+body, html {
+  margin: 0; padding: 0;
+  height: 100%;
+  font-family: 'Press Start 2P', sans-serif;
+  color: var(--text-color);
+  overflow: hidden;
+}
+
+/* Background Video */
+.video-background {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -3;
+  overflow: hidden;
+}
+
+.video-background video {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%; min-height: 100%;
+  object-fit: cover;
+  filter: brightness(0.3) blur(2px);
+  pointer-events: none;
+}
+
+/* Pixel Star Background */
+.stars {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  z-index: -2;
+}
+
+.star {
+  position: absolute;
+  width: 2px; height: 2px;
+  background: white;
+  opacity: 0.8;
+  animation: twinkle 2s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.5); }
+}
+
+/* Pixel Cat */
+.pixel-cat {
+  position: fixed;
+  bottom: 20px;
+  left: -80px;
+  width: 60px;
+  image-rendering: pixelated;
+  animation: walk 30s linear infinite;
+  z-index: 1;
+}
+
+@keyframes walk {
+  0% { left: -80px; }
+  100% { left: 100%; }
+}
+
+/* Pixel floating blocks */
+.pixel-block {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  background: #fafafa;
+  image-rendering: pixelated;
+  animation: floatUpBlock 8s linear infinite;
+  z-index: -1;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+}
+
+@keyframes floatUpBlock {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+}
+
+/* Splash Options */
+.splash {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+}
+
+.splash h1 {
+  font-size: 1.5rem;
+  color: var(--accent-color);
+  margin-bottom: 20px;
+}
+
+.button {
+  display: block;
+  background: transparent;
+  border: 3px solid var(--accent-color);
+  color: var(--text-color);
+  padding: 15px 20px;
+  margin: 15px auto;
+  cursor: pointer;
+  font-family: 'Press Start 2P', sans-serif;
+  font-size: 0.8rem;
+  transition: background 0.3s, color 0.3s, transform 0.2s, box-shadow 0.3s;
+  width: 260px;
+}
+
+.button:hover {
+  background: var(--accent-color);
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px var(--accent-color);
+}
+
+/* Welcome Popup */
+.popup {
+  position: fixed;
+  top: 20px; left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.8);
+  color: var(--text-color);
+  padding: 15px 20px;
+  border: 2px solid var(--accent-color);
+  font-size: 0.6rem;
+  z-index: 5;
+  font-family: 'Press Start 2P', sans-serif;
+  opacity: 0;
+  animation: fadeInOut 5s ease forwards;
+  max-width: 80%;
+  text-align: center;
+}
+.pixel-cat {
+  position: fixed;
+  bottom: 20px;
+  left: -80px;
+  width: 60px;
+  image-rendering: pixelated;
+  animation: walk 30s linear infinite;
+  z-index: 1;
+}
+  /* Footer */
+  footer {
+    border-top: 1px solid #eee;
+    padding: 16px 0 48px;
+    font-size: 0.875rem;
+    color: #999;
+    text-align: center;
+  }
+
+  footer a {
+    margin: 0 10px;
+  }
+
+.pixel-cat-static {
+  position: fixed;
+  bottom: 70px;  /* moved up a bit */
+  right: 30px;
+  width: 200px;  /* bigger size */
+  image-rendering: pixelated;
+  z-index: 1;
+  animation: floatUpDown 4s ease-in-out infinite;
+}
+
+@keyframes floatUpDown {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+  10%, 90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+}
+</style>
+</head>
+<body>
+
+<!-- Background Video -->
+<div class="video-background">
+  <video autoplay muted loop playsinline>
+    <source src="./img/bg.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+<!-- Pixel Stars -->
+<div class="stars" id="stars"></div>
+
+<!-- Pixel Cat -->
+<img src="./img/catt.gif" alt="Pixel Cat" class="pixel-cat" />
+<img src="./img/masiiii.png" alt="Pixel Cat Static" class="pixel-cat-static" />
+
+
+<!-- Splash Menu -->
+<div class="splash" id="splash">
+    <img src="./img/masify.png" alt="Anxiety Contracts Logo" class="logo" style="width:200px; margin-bottom:20px;">
+
+ <button class="button" data-href="collab.html" onclick="navigate(this)">PREVIOUS COLLAB</button>
+  <button class="button" data-href="contract.html" onclick="navigate('contract')">CONTRACT</button>
+</div>
+
+<!-- Welcome Popup -->
+<div class="popup" id="popup">Welcome to Masify. sometime i do cool shxt</div>
+   
+<script>
+// Generate pixel stars
+const starsContainer = document.getElementById('stars');
+for (let i = 0; i < 150; i++) {
+  const star = document.createElement('div');
+  star.className = 'star';
+  star.style.top = Math.random() * 100 + '%';
+  star.style.left = Math.random() * 100 + '%';
+  star.style.animationDuration = (1 + Math.random() * 2) + 's';
+  starsContainer.appendChild(star);
+}
+
+// Floating pixel blocks
+for (let i = 0; i < 25; i++) {
+  const block = document.createElement('div');
+  block.className = 'pixel-block';
+  block.style.left = Math.random() * 100 + '%';
+  block.style.bottom = '-15px';
+  block.style.animationDelay = (Math.random() * 7) + 's';
+  document.body.appendChild(block);
+}
+
+// Navigation placeholder
+function navigate(option) {
+  alert(`You selected: ${option.toUpperCase()}\nThis will navigate to ${option}.html or open a modal.`);
+}function navigate(button) {
+  const url = button.getAttribute('data-href');
+  if(url) {
+    window.location.href = url;
+  } else {
+    alert('No URL specified');
+  }
+}
+
+
+// Hide popup after animation
+const popup = document.getElementById('popup');
+popup.addEventListener('animationend', () => {
+  popup.style.display = 'none';
+});
+</script>
+
+</body>
+</html>

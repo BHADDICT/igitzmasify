@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Masify Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+<style>
+  /* Variables */
+  :root {
+    --primary-color: #7b1e1e;
+    --text-color: #222;
+    --bg-color: #fff;
+    --accent-color: #b71c1c;
+    --gap: 24px;
+    --max-width: 1280px;
+  }
+
+  /* Reset & Base */
+  * {
+    box-sizing: border-box;
+  }
+  body, html {
+    margin: 0; padding: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  a:hover {
+    color: #4a0c0c;
+  }
+
+  /* Container */
+  .container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--gap);
+  }
+
+  /* Header */
+  header {
+    padding: var(--gap) 0 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .brand {
+    font-weight: 600;
+    font-size: 1.75rem;
+    letter-spacing: 0.05em;
+    color: var(--primary-color);
+  }
+
+  .tagline {
+    color: #555;
+    font-weight: 400;
+    font-size: 0.875rem;
+    margin-top: 6px;
+  }
+
+  nav.social-icons {
+    display: flex;
+    gap: 18px;
+  }
+
+  nav.social-icons a {
+    font-size: 1.3rem;
+    color: #666;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  nav.social-icons a:hover {
+    color: var(--accent-color);
+    transform: scale(1.15);
+  }
+
+  /* Gallery */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--gap);
+    margin-bottom: 64px;
+  }
+
+  .gallery-item {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .gallery-item:hover {
+    transform: translateY(-6px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(183, 28, 28, 0.25);
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid #eee;
+    padding: 16px 0 48px;
+    font-size: 0.875rem;
+    color: #999;
+    text-align: center;
+  }
+
+  footer a {
+    margin: 0 10px;
+  }
+
+  /* Pixel Cat */
+  .pixel-cat {
+    position: fixed;
+    bottom: 20px;
+    left: -100px;
+    width: 80px;
+    image-rendering: pixelated;
+    animation: walk 25s linear infinite;
+    pointer-events: none;
+    z-index: 10;
+  }
+/* Navigation Buttons Below Gallery */
+.nav-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.nav-buttons button {
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+.nav-buttons button:hover {
+  background: #7b1e1e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 480px) {
+  .nav-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+  @keyframes walk {
+    0% {
+      left: -100px;
+      transform: scaleX(1);
+    }
+    50% {
+      transform: scaleX(1);
+    }
+    51% {
+      transform: scaleX(-1);
+    }
+    100% {
+      left: 100vw;
+      transform: scaleX(-1);
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div>
+        <div class="brand">igitzmasify</div>
+        <div class="tagline">proof cool brand occasionally collab with me</div>
+      </div>
+      <nav class="social-icons" aria-label="Social media links">
+        <a href="https://www.instagram.com/igitzmasify/?utm_source=ig_web_button_share_sheet" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="gallery" id="gallery"></section>
+    </main>
+<!-- Add below your <section class="gallery" id="gallery"></section> inside <main> -->
+
+<div class="nav-buttons">
+  <button onclick="location.href='index.html'">Back to Home</button>
+  <button onclick="location.href='contract.html'">View Contract</button>
+</div>
+
+    <footer>
+      &copy; 2025 Masify. All rights reserved.
+      <a href="#">Privacy Policy</a> |
+      <a href="#">Contact</a>
+    </footer>
+  </div>
+
+  <img src="./img/catt.gif" alt="Pixel Cat" class="pixel-cat" />
+
+  <script>
+    // Gallery Images
+    const gallery = document.getElementById('gallery');
+    const images = [
+      './img/decay.png',
+      './img/logo.JPG',
+      './img/logoaxtbg.png',
+      './img/vampiric.png',
+      './img/misspla.png',
+      './img/logo.gif',
+      './img/logo.png',
+      './img/loogo.gif',
+      './img/logo6.jpg',
+      './img/logo5.jpg',
+      './img/ML.png',
+      './img/logo4.jpg',
+      './img/logo3.jpg',
+      './img/logo2.jpg',
+      './img/logo1.jpg'
+    ];
+
+    images.forEach(src => {
+      const container = document.createElement('div');
+      container.className = 'gallery-item';
+
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = "Portfolio Image";
+
+      container.appendChild(img);
+      gallery.appendChild(container);
+    });
+  </script>
+</body>
+</html>
