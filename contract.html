@@ -1,106 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Masify Contract</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-<style>
-  :root {
-    --primary-color: #7b1e1e;
-    --text-color: #222;
-    --bg-color: #fff;
-    --accent-color: #b71c1c;
-    --gap: 24px;
-    --max-width: 720px;
-  }
-  * { box-sizing: border-box; }
-  body, html {
-    margin: 0; padding: 0;
-    font-family: 'Inter', sans-serif;
-    background: var(--bg-color);
-    color: var(--text-color);
-    min-height: 100vh;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  .container {
-    max-width: var(--max-width);
-    margin: 48px auto;
-    padding: 0 var(--gap);
-  }
-  header {
-    margin-bottom: 40px;
-    text-align: center;
-  }
-  header h1 {
-    font-weight: 600;
-    font-size: 2rem;
-    color: var(--primary-color);
-    margin-bottom: 8px;
-  }
-  header p {
-    font-size: 1rem;
-    color: #555;
-  }
-  form { display: grid; gap: 20px; }
-  label { font-weight: 600; color: var(--primary-color); }
-  input[type="text"], input[type="tel"] {
-    width: 100%; padding: 10px; font-size: 1rem;
-    border: 1.5px solid #ccc; border-radius: 6px;
-    transition: border-color 0.3s;
-  }
-  input[type="text"]:focus, input[type="tel"]:focus {
-    outline: none; border-color: var(--accent-color);
-  }
-  .contract-section { font-weight: 700; margin-top: 24px; color: var(--primary-color); }
-  .signature-container { margin-top: 20px; }
-  #signature-pad {
-    border: 2px solid var(--accent-color);
-    border-radius: 6px;
-    width: 100%; max-width: 400px;
-    height: 150px;
-    touch-action: none;
-    background: #f8f8f8;
-  }
-  #signature-pad.disabled { pointer-events: none; background: #eee; }
-  .buttons {
-    margin-top: 24px;
-    display: flex; gap: 16px; flex-wrap: wrap;
-  }
-  button {
-    cursor: pointer; padding: 12px 24px;
-    background: var(--accent-color); color: white;
-    font-weight: 600; font-size: 1rem;
-    border: none; border-radius: 6px;
-    transition: background 0.3s ease;
-    flex-grow: 1; max-width: 200px;
-  }
-  button:hover { background: #7b1e1e; }
-  footer {
-    margin-top: 80px; font-size: 0.8rem;
-    color: #999; text-align: center;
-  }
-  @media (max-width: 480px) {
-    .buttons { flex-direction: column; }
-    button { max-width: 100%; }
-  }
-  /* Modal */
-  #previewModal {
-    display: none; position: fixed; z-index: 1000;
-    left: 0; top: 0; width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.6);
-    justify-content: center; align-items: center;
-  }
-  #previewModal.active { display: flex; }
-  .modal-content {
-    background: white; padding: 24px;
-    max-width: 600px; max-height: 90vh;
-    overflow-y: auto; border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Masify Contract</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary-color: #7b1e1e;
+      --text-color: #222;
+      --bg-color: #fff;
+      --accent-color: #b71c1c;
+      --gap: 24px;
+      --max-width: 720px;
+    }
+    * { box-sizing: border-box; }
+    body, html {
+      margin: 0; padding: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .container {
+      max-width: var(--max-width);
+      margin: 48px auto;
+      padding: 0 var(--gap);
+    }
+    header {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    header h1 {
+      font-weight: 600;
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin-bottom: 8px;
+    }
+    header p {
+      font-size: 1rem;
+      color: #555;
+    }
+    form { display: grid; gap: 20px; }
+    label { font-weight: 600; color: var(--primary-color); }
+    input[type="text"], input[type="tel"] {
+      width: 100%; padding: 10px; font-size: 1rem;
+      border: 1.5px solid #ccc; border-radius: 6px;
+      transition: border-color 0.3s;
+    }
+    input[type="text"]:focus, input[type="tel"]:focus {
+      outline: none; border-color: var(--accent-color);
+    }
+    .contract-section { font-weight: 700; margin-top: 24px; color: var(--primary-color); }
+    .signature-container { margin-top: 20px; }
+    #signature-pad {
+      border: 2px solid var(--accent-color);
+      border-radius: 6px;
+      width: 100%; max-width: 400px;
+      height: 150px;
+      touch-action: none;
+      background: #f8f8f8;
+    }
+    #signature-pad.disabled {
+      pointer-events: none;
+      background: #eee;
+    }
+    .buttons {
+      margin-top: 24px;
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+    button {
+      cursor: pointer; padding: 12px 24px;
+      background: var(--accent-color); color: white;
+      font-weight: 600; font-size: 1rem;
+      border: none; border-radius: 6px;
+      transition: background 0.3s ease;
+      flex-grow: 1; max-width: 200px;
+    }
+    button:hover { background: #7b1e1e; }
+    footer {
+      margin-top: 80px; font-size: 0.8rem;
+      color: #999; text-align: center;
+    }
+    @media (max-width: 480px) {
+      .buttons { flex-direction: column; }
+      button { max-width: 100%; }
+    }
+    /* Modal */
+    #previewModal {
+      display: none; position: fixed; z-index: 1000;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.6);
+      justify-content: center; align-items: center;
+    }
+    #previewModal.active { display: flex; }
+    .modal-content {
+      background: white; padding: 24px;
+      max-width: 600px; max-height: 90vh;
+      overflow-y: auto; border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+  </style>
 </head>
 <body>
 
@@ -210,14 +213,16 @@ This Agreement constitutes the entire understanding between the parties and supe
 
   contractTextArea.textContent = contract;
   previewModal.classList.add('active');
-});
 
-document.getElementById('closePreview').addEventListener('click', () => {
-  previewModal.classList.remove('active');
+  // ✅ Enable signature pad here
   signaturePad.on();
   document.getElementById('signature-pad').classList.remove('disabled');
   document.getElementById('clear').disabled = false;
   document.getElementById('generatePdfBtn').disabled = false;
+});
+
+document.getElementById('closePreview').addEventListener('click', () => {
+  previewModal.classList.remove('active');
 });
 
 document.getElementById('clear').addEventListener('click', () => {
@@ -230,6 +235,7 @@ document.getElementById('contractForm').addEventListener('submit', (e) => {
     alert('Please sign before downloading.');
     return;
   }
+
   const name = document.getElementById('clientName').value;
   const brand = document.getElementById('brandName').value;
   const phone = document.getElementById('clientPhone').value;
@@ -265,6 +271,7 @@ The Client acknowledges that the Service Provider will provide services only for
 
 3. Payment Terms
 based on the selected packages
+
 4. Termination
 Either party may terminate this Agreement by providing written notice 30 days in advance.
 
@@ -272,8 +279,7 @@ Either party may terminate this Agreement by providing written notice 30 days in
 This Agreement shall always be honest and pleasure for both parties.
 
 6. Entire Agreement
-This Agreement constitutes the entire understanding between the parties and supersedes all prior agreements.
-`;
+This Agreement constitutes the entire understanding between the parties and supersedes all prior agreements.`;
 
   const lines = doc.splitTextToSize(text, 180);
   doc.text(lines, 15, y);
